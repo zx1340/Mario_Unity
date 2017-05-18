@@ -21,7 +21,9 @@ public class CameraScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-			Campos = player.transform.position.x + 7.6f;
+		if (player) {
+			Campos = player.transform.position.x + 1.6f;
 			gameObject.transform.position = new Vector3 (Mathf.Clamp (Campos, min, max), gameObject.transform.position.y, gameObject.transform.position.z);
+		}
 	}
 }

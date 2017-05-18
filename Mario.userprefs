@@ -1,15 +1,18 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/scripts/PlayerControler.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/scripts/Coin.cs">
     <Files>
-      <File FileName="Assets/scripts/PlayerControler.cs" Line="41" Column="37" />
-      <File FileName="Assets/scripts/EnemyMove.cs" Line="1" Column="1" />
+      <File FileName="Assets/scripts/PlayerControler.cs" Line="125" Column="54" />
+      <File FileName="Assets/scripts/Quit.cs" Line="1" Column="1" />
+      <File FileName="Assets/scripts/MenuScript.cs" Line="1" Column="1" />
       <File FileName="Assets/scripts/MushRoomScript.cs" Line="1" Column="1" />
       <File FileName="Assets/scripts/CameraScript.cs" Line="1" Column="1" />
       <File FileName="Assets/scripts/PowerUpBlock.cs" Line="1" Column="1" />
       <File FileName="Assets/scripts/FireFlowerScript.cs" Line="1" Column="1" />
       <File FileName="Assets/scripts/EnemyDamage.cs" Line="1" Column="1" />
-      <File FileName="Assets/scripts/BulletScript.cs" Line="1" Column="1" />
+      <File FileName="Assets/scripts/BulletScript.cs" Line="14" Column="61" />
+      <File FileName="Assets/scripts/BlockMoveEnemy.cs" Line="1" Column="1" />
+      <File FileName="Assets/scripts/Coin.cs" Line="17" Column="54" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

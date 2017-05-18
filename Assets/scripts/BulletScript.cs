@@ -6,11 +6,13 @@ public class BulletScript : MonoBehaviour {
 
 	// Use this for initialization
 	public float speed = 7f;
-
 	// Update is called once per frame
 	private PlayerControler player;
 	void Start(){
-		Destroy(gameObject, 5);
+		AudioSource audio = gameObject.AddComponent < AudioSource > ();
+		audio.PlayOneShot ((AudioClip)Resources.Load ("shot_player")); 
+
+		Destroy(gameObject, 3);
 		player = transform.root.GetComponent<PlayerControler>();
 	}
 
@@ -32,8 +34,10 @@ public class BulletScript : MonoBehaviour {
 	{
 		if (other.gameObject.tag == "enemy") {
 			print ("Bullet hit enemy");
+			AudioSource audio = gameObject.AddComponent < AudioSource > ();
+			audio.PlayOneShot ((AudioClip)Resources.Load ("explosion")); 
+
 			Destroy (other.gameObject);
-			Destroy (this.gameObject);
 		}
 
 	}

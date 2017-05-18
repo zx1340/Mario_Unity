@@ -25,13 +25,31 @@ public class PlayerControler : MonoBehaviour {
 	private float nextFire;
 
 	public float distToGround;
+	private Animator animator;
+	const string animationState = "walking";
+
+
+	public AudioClip eatgold;
+	public AudioClip killenemy;
+	public AudioClip downlevel;
+	public AudioClip eatmushroom;
+	public AudioClip nextlevel;
+	public AudioClip die;
+
+
+
+	AudioSource audio;
+
+
+
 	void Start(){
 		//setup rigit body
 		PlayerState = 0;
 		rb = GetComponent<Rigidbody2D> ();
 		pc = gameObject.GetComponent<Renderer> ();
-
-
+		animator = GetComponent<Animator>();
+		animator.SetBool(animationState,false);
+		audio = GetComponent<AudioSource> ();
 	}
 
 	void State(){
@@ -46,23 +64,24 @@ public class PlayerControler : MonoBehaviour {
 			//do nothing
 			Vector3 theScale = transform.localScale;
 
-			transform.localScale = new Vector3 (theScale.x, 1f, 1f);
-			transform.GetChild(0).GetComponent<SpriteRenderer>().color = new Color(1f, 0f, 0f, 1f); 
+			transform.localScale = new Vector3 (theScale.x, 0.3f, 1f);
+			transform.GetComponent<SpriteRenderer>().color = new Color(1f, 0f, 0f, 1f); 
 			canFire = false;
+
 		}
 		if (PlayerState == 1) {
 			Vector3 theScale = transform.localScale;
 
-			transform.localScale = new Vector3 (theScale.x, 1.5f, 1f);
-			transform.GetChild(0).GetComponent<SpriteRenderer>().color = new Color(0f, 1f, 0f, 1f); 
+			transform.localScale = new Vector3 (theScale.x, 0.6f, 1f);
+			transform.GetComponent<SpriteRenderer>().color = new Color(0f, 1f, 0f, 1f); 
 			canFire = false;
 		}
 
 		if (PlayerState == 2) {
 
 			Vector3 theScale = transform.localScale;
-			transform.localScale = new Vector3 (theScale.x, 1.5f, 1f);
-			transform.GetChild(0).GetComponent<SpriteRenderer>().color = new Color(0f, 0f, 0f, 1f); 
+			transform.localScale = new Vector3 (theScale.x, 0.6f, 1f);
+			transform.GetComponent<SpriteRenderer>().color = new Color(0f, 0f, 0f, 1f); 
 			canFire = true;
 		}
 
@@ -80,18 +99,21 @@ public class PlayerControler : MonoBehaviour {
 			if(facingRight == false){
 				Flip ();
 			}
+			animator.SetBool(animationState,true); //for Walk
 		}
 		if (Input.GetKey (KeyCode.LeftArrow) || (Input.GetKey(KeyCode.A))) {
 			transform.Translate (Vector3.left * speed * Time.fixedDeltaTime);
 			if (facingRight == true) {
 				Flip ();
 			}
-		
+			animator.SetBool(animationState,true);
 		}
 		if (Input.GetKey (KeyCode.UpArrow)  || (Input.GetKey (KeyCode.W))) {
+			
 			if (grounded == true) {
 				GetComponent<Rigidbody2D> ().velocity = new Vector2 (0f, height);
 			}
+			animator.SetBool(animationState,false);
 		}
 		if( (Input.GetKey (KeyCode.Space))){
 			if (canFire == true  && Time.time > nextFire){ 
@@ -108,41 +130,84 @@ public class PlayerControler : MonoBehaviour {
 				}
 					
 			}
-		
+			animator.SetBool(animationState,false);
 		}
 
 
+		if(Input.anyKey == false)
+		{
+			animator.SetBool(animationState,false); //for Walk
+		}
+
+
+
+			
 	}
 
 
 
 	void OnTriggerEnter2D(Collider2D other){
 		print ("Player enter collider 2d:" + other.gameObject.tag);
+
+		if (other.gameObject.tag == "mushroom") {
+		
+			switch (PlayerState) {
+			case 0:
+				PlayerState = 1;
+				audio.PlayOneShot (nextlevel,1f);
+				break;
+			case 1:
+				PlayerState = 1;
+				break;
+			case 2:
+				PlayerState = 2;
+				break;
+			default:
+				break;
+			}
+		}
+
+		if (other.gameObject.tag == "fireflower") {
+			PlayerState = 2;
+			audio.PlayOneShot (nextlevel,1f);
+		}
+
+
+
+		if (other.gameObject.tag == "Coin") {
+			audio.PlayOneShot (eatgold,1f);
+		}
+
+
 		if (other.gameObject.tag == "Ground") {
 			grounded = true;
 		} 
 
 		if (other.gameObject.tag == "enemy_weak") {
 			
+			audio.PlayOneShot (killenemy,1f);
 			Destroy(other.transform.parent.gameObject);
 		
 		}
 		if (other.gameObject.tag == "enemy_shell") {
+			audio.PlayOneShot (downlevel,1f);
 		
 			Destroy(other.transform.parent.gameObject);
 			PlayerState = PlayerState - 1;
 		}
 		if (other.gameObject.tag == "levelend") {
 			
+
 			SceneManager.LoadScene ("Mario 1");
 		}
 
 		if (other.gameObject.tag == "deadzone") {
+			audio.PlayOneShot (die,1f);
+
 		
 			SceneManager.LoadScene ("Menu");
 		}
-
-
+			
 	}
 	void OnTriggerExit2D(Collider2D other){
 		//print ("Player exit 2D" + other.gameObject.tag);

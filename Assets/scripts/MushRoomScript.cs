@@ -8,10 +8,15 @@ public class MushRoomScript : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D col){
 		if (col.gameObject.tag == "player") {
-			if (PlayerControler.PlayerState == 0) {
-				PlayerControler.PlayerState = 1;
-			}
+
 			Destroy (this.gameObject);
+
+		}
+		
+		if (col.gameObject.tag == "deadzone") {
+		
+			Destroy (this.gameObject);
+		
 		}
 	}
 	void Update(){

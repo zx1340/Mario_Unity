@@ -6,15 +6,21 @@ public class Coin : MonoBehaviour {
 
 	int CoinValue = 100;
 
+
 	void OnTriggerEnter2D(Collider2D col){
 		if (col.gameObject.tag == "player") {
+			print ("PLAYER MEET THE COIN");
+
 			ScoreManager.score += CoinValue;
+
 			Destroy (gameObject);
+
 		}
 
 	}
 	void Update(){
 		Physics2D.IgnoreLayerCollision (9, 10);
+
 	}
 		
 

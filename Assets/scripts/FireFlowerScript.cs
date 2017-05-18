@@ -6,7 +6,6 @@ public class FireFlowerScript : MonoBehaviour {
 
 	void OnTriggerEnter2D(){
 
-		PlayerControler.PlayerState = 2;
 		Destroy (this.gameObject);
 	}
 
